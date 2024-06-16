@@ -22,18 +22,25 @@ public class DataRepository {
 	private List<Book> books = new ArrayList<>();
 	private List<Borrowed> borroweds = new ArrayList<>();
 
+	// Formatter for parsing dates in MM/dd/yyyy format
 	DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
 
+	// Load user data from users.csv then save it into users list
 	public List<User> loadusers() throws IOException, CsvException {
 		try (CSVReader reader = new CSVReader(
-				new InputStreamReader(getClass().getResourceAsStream("/users.csv"), StandardCharsets.UTF_8))) {
+				new InputStreamReader(getClass().getResourceAsStream("/users1.csv"), StandardCharsets.UTF_8))) {
 			List<String[]> lines = reader.readAll();
 			for (int i = 1; i < lines.size(); i++) {
 				String[] line = lines.get(i);
+				// Skip lines that do not have exactly 5 columns
+				if (line.length != 5)
+					continue;
 				User user = new User();
 				user.setName(line[0]);
 				user.setFirstName(line[1]);
+				// Read the date using the formatter
 				user.setMemberSince(line[2].isEmpty() ? null : LocalDate.parse(line[2], formatter));
+				// Non terminated user's memberTo column is null
 				user.setMemberTo(line[3].isEmpty() ? null : LocalDate.parse(line[3], formatter));
 				user.setGender(line[4]);
 				users.add(user);
@@ -42,12 +49,15 @@ public class DataRepository {
 		return users;
 	}
 
+	// Load book data from books.csv then save it into books list
 	public List<Book> loadBooks() throws IOException, CsvException {
 		try (CSVReader reader = new CSVReader(
-				new InputStreamReader(getClass().getResourceAsStream("/book.csv"), StandardCharsets.UTF_8))) {
+				new InputStreamReader(getClass().getResourceAsStream("/books1.csv"), StandardCharsets.UTF_8))) {
 			List<String[]> lines = reader.readAll();
 			for (int i = 1; i < lines.size(); i++) {
 				String[] line = lines.get(i);
+				if (line.length != 4)
+					continue;
 				Book book = new Book();
 				book.setTitle(line[0]);
 				book.setAuthor(line[1]);
@@ -59,12 +69,15 @@ public class DataRepository {
 		return books;
 	}
 
+	// Load borrowed data from borrowed.csv then save it into borroweds list
 	public List<Borrowed> loadBorroweds() throws IOException, CsvException {
 		try (CSVReader reader = new CSVReader(
-				new InputStreamReader(getClass().getResourceAsStream("/book.csv"), StandardCharsets.UTF_8))) {
+				new InputStreamReader(getClass().getResourceAsStream("/borrowed1.csv"), StandardCharsets.UTF_8))) {
 			List<String[]> lines = reader.readAll();
 			for (int i = 1; i < lines.size(); i++) {
 				String[] line = lines.get(i);
+				if (line.length != 4)
+					continue;
 				Borrowed borrowed = new Borrowed();
 				borrowed.setBorrower(line[0]);
 				borrowed.setBook(line[1]);
