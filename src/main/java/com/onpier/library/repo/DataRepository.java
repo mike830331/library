@@ -28,7 +28,7 @@ public class DataRepository {
 	// Load user data from users.csv then save it into users list
 	public List<User> loadusers() throws IOException, CsvException {
 		try (CSVReader reader = new CSVReader(
-				new InputStreamReader(getClass().getResourceAsStream("/users1.csv"), StandardCharsets.UTF_8))) {
+				new InputStreamReader(getClass().getResourceAsStream("/users.csv"), StandardCharsets.UTF_8))) {
 			List<String[]> lines = reader.readAll();
 			for (int i = 1; i < lines.size(); i++) {
 				String[] line = lines.get(i);
@@ -52,7 +52,7 @@ public class DataRepository {
 	// Load book data from books.csv then save it into books list
 	public List<Book> loadBooks() throws IOException, CsvException {
 		try (CSVReader reader = new CSVReader(
-				new InputStreamReader(getClass().getResourceAsStream("/books1.csv"), StandardCharsets.UTF_8))) {
+				new InputStreamReader(getClass().getResourceAsStream("/books.csv"), StandardCharsets.UTF_8))) {
 			List<String[]> lines = reader.readAll();
 			for (int i = 1; i < lines.size(); i++) {
 				String[] line = lines.get(i);
@@ -72,7 +72,7 @@ public class DataRepository {
 	// Load borrowed data from borrowed.csv then save it into borroweds list
 	public List<Borrowed> loadBorroweds() throws IOException, CsvException {
 		try (CSVReader reader = new CSVReader(
-				new InputStreamReader(getClass().getResourceAsStream("/borrowed1.csv"), StandardCharsets.UTF_8))) {
+				new InputStreamReader(getClass().getResourceAsStream("/borrowed.csv"), StandardCharsets.UTF_8))) {
 			List<String[]> lines = reader.readAll();
 			for (int i = 1; i < lines.size(); i++) {
 				String[] line = lines.get(i);
